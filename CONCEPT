@@ -1,0 +1,235 @@
+# Hayes Outbreak — GTA-Style Open-World Zombie Survival (Game Concept)
+
+## High Concept
+A modern-day, GTA-style open-world zombie survival shooter set in a fictionalized **Hayes, America** inspired by Hays, Kansas, with **Fort Hays State University as the main focal point**. Former FHSU football players and local survivors must navigate a city-wide outbreak where many infected are turned students and townspeople. The world is fully explorable with interiors, roads, campus blocks, and surrounding neighborhoods.
+
+---
+
+## Core Fantasy
+- Survive wave pressure while moving freely through a realistic modern city.
+- Scavenge weapons, ammo, and gear from walls, lockers, stores, houses, garages, and police/military caches.
+- Build your character from basic survivor to elite anti-horde specialist.
+- Drive and customize muscle cars (Dodge Charger/Challenger-inspired) and utility vehicles for mobility, rescue, and zombie-clearing.
+- Balance risk and reward: zombie packs can overwhelm even armored vehicles and heavily geared players.
+
+---
+
+
+## GTA-Style Pillars (Zombie Edition)
+- **One connected sandbox**: no level-select feel; you can freely roam from campus to downtown to outskirts.
+- **Mission + free-roam blend**: story jobs, side activities, random street events, and emergent chaos between missions.
+- **Living city simulation**: survivor traffic, faction patrols, looting NPCs, road hazards, and shifting hot zones.
+- **Character + vehicle fantasy**: build your survivor and your car identity with visual/performance upgrades.
+- **Heat/Threat response loop**: loud actions escalate infected/faction pressure, forcing escapes, stealth, or stand-your-ground fights.
+
+---
+
+## Setting & World Structure
+
+## Playable Districts (Open-World)
+1. **University Core**
+   - Stadium, practice fields, dorms, student union, library, labs, cafeterias, parking garages.
+   - Strong early-game loot and safehouse opportunities.
+2. **Downtown Hayes**
+   - Main street storefronts, pawn shops, police station annex, pharmacy, diner blocks.
+   - Mid-tier loot and high-risk ambush alleys.
+3. **Residential Grid**
+   - Homes, apartment buildings, backyards, storm shelters, rooftops.
+   - Strong scavenging, stealth routes, side quest density.
+4. **Industrial Edge**
+   - Warehouse depots, auto shops, fuel yards, rail zone.
+   - Vehicle parts, heavy tools, rare upgrades.
+5. **Highway & Outskirts**
+   - Interchanges, rest stops, farm roads, checkpoints.
+   - High-speed traversal, convoy events, elite infected variants.
+
+## Day/Night Cycle
+- **Day**: Better visibility, more roamers, safer travel.
+- **Night**: Mutated behavior, more coordinated hordes, unique loot multipliers.
+- Dynamic weather (rain, wind, dust, thunder) affects hearing, visibility, and vehicle traction.
+
+---
+
+## Player Roles & Identity
+
+## Character Background
+- Player starts as an FHSU-associated athlete/survivor with balanced athletic stats.
+- Optional archetype emphasis:
+  - **Linebacker**: Tankier, stronger melee stagger.
+  - **Receiver**: Faster sprint, better evasion and climbing.
+  - **Quarterback**: Improved tactical scanning and team buffs.
+
+## Progression Pillars
+1. **Combat Skill Tree** (recoil control, weak-point damage, reload speed).
+2. **Survival Skill Tree** (carry weight, med efficiency, stealth movement).
+3. **Mechanic Skill Tree** (vehicle repair speed, fuel efficiency, armor mounting).
+4. **Leadership Skill Tree** (NPC squad commands, morale boosts, barter discounts).
+
+---
+
+## Zombie Ecosystem
+
+## Infected Classes
+- **Rusher**: Fast, fragile, flanks frequently.
+- **Bruiser**: Slow tank that breaks doors and barricades.
+- **Crawler**: Hard to spot, ambushes indoors.
+- **Shrieker**: Alerts nearby infected and escalates swarm behavior.
+- **Juggernaut Variant** (late game): Resistant to small-caliber rounds.
+
+## Horde Logic
+- Sound/light/smell-driven aggro system.
+- Vehicle engines, alarms, gunfire, and explosions draw escalating groups.
+- “Pack Density Limit” mechanic: small/medium packs can be pushed by vehicles; dense street hordes can disable cars and pull players out.
+
+## City Threat Level (GTA-style pressure)
+- Causing noise/destruction raises a local **Threat Level** from 1 to 5.
+- Higher levels spawn larger infected waves, faster variants, and possible hostile human encounters (raiders/scavenger gangs).
+- Threat cools when players break line-of-sight, go quiet, switch vehicles, or hide in interiors/alleys.
+
+---
+
+## Combat, Loot, and Economy
+
+## Weapon Discovery
+- Guns spawn on walls, floors, lockers, display racks, and hidden stashes.
+- Categories:
+  - Sidearms
+  - Shotguns
+  - SMGs
+  - Assault rifles
+  - DMR/sniper options
+  - Improvised melee (bats, axes, pipe tools)
+
+## Attachments & Gun Upgrades
+- Optics, suppressors, compensators, extended mags, laser modules.
+- Durability and maintenance for realism.
+- Ammo caliber scarcity creates strategic weapon choices.
+
+## Armor & Body Upgrades
+- Helmet tiers, chest rigs, trauma plates, tactical clothing.
+- Upgrade path examples:
+  - Light mobility build
+  - Balanced patrol build
+  - Heavy breacher build
+
+## Points & Currency Loop
+- **Infection Elimination Points (IEP)** for kills, objectives, rescues.
+- IEP spent at safehouse terminals, traders, or mobile vendors.
+- Additional resources:
+  - Scrap (crafting)
+  - Fuel (vehicles/generators)
+  - Med supplies (healing/boosters)
+
+---
+
+## Vehicle System (Modern Realism)
+
+## Vehicle Types
+- **Muscle Cars**: Charger/Challenger-inspired builds for speed and style.
+- **SUV/Truck**: Better durability and storage.
+- **Utility Vans**: Team support and supply transport.
+
+## Vehicle Customization
+- Visual mods: body kits, paint, rims, lighting, decals.
+- Performance mods: engine tune, suspension, tires, brakes, transmission.
+- Survival mods:
+  - Window guards
+  - Reinforced bumpers
+  - Underbody plating
+  - Roof racks for extra storage
+
+## Vehicle Damage & Counterplay
+- Zombie impacts damage tires, windshield, radiator, and drivetrain.
+- Hitting large hordes can stall/overheat/immobilize vehicle.
+- Players must choose when to ram vs. avoid.
+
+---
+
+## Safehouses, Hiding, and Base Growth
+
+## Hiding & Evasion
+- Lockers, classrooms, maintenance tunnels, storm drains, rooftop units, garages.
+- Noise discipline system (movement speed, doors, glass breaking, suppressed fire).
+
+## Safehouse Management
+- Convert buildings into secured hubs.
+- Upgrades include:
+  - Barricades
+  - Power restoration
+  - Medical bay
+  - Ammo bench
+  - Vehicle workshop
+  - Radio tower (map intel)
+
+## Defensive Events
+- Periodic siege nights test base durability and preparation.
+- Co-op players/NPC survivors can be assigned defense roles.
+
+---
+
+## Mission Structure
+
+## Main Story Arc
+- Discover outbreak origin tied to campus research and failed emergency response.
+- Evacuation routes collapse; player must build a regional survival network.
+- Endgame choices affect city state: abandon, fortify, or reclaim.
+
+## Side Content
+- Survivor rescue missions.
+- Supply convoy escorts.
+- High-value target hunts (special infected).
+- Time-limited radio distress events.
+- Vehicle theft/recovery contracts.
+
+## GTA-Style Side Activities
+- Street rescue calls (protect survivor groups and escort to safehouses).
+- Supply heists (raid high-risk warehouses/pharmacies for premium loot).
+- Vehicle challenge routes (time trials through infected zones).
+- Territory control (clear and hold city blocks for faction rewards).
+- Bounty contracts on elite infected roaming specific districts.
+
+---
+
+## Multiplayer / Co-op Vision
+- 1–4 player drop-in co-op.
+- Shared world progression with host-based story checkpoints.
+- Team roles encouraged (driver, scout, medic, heavy gunner).
+- Friendly-fire optional realism mode.
+
+---
+
+## Realism Features (Modern Era Feel)
+- Detailed interiors with believable clutter, signage, and dynamic lighting.
+- Modern UI style: tactical smartwatch/map app + radio chatter overlays.
+- Realistic audio mix: distant sirens, helicopter flyovers, emergency alerts, crowd echoes.
+- Injury model: limb damage affects handling, movement, and aiming until treated.
+- Fuel, battery, and maintenance loops for long-term survival tension.
+
+---
+
+## Example Gameplay Loop (15–20 Minutes)
+1. Spawn at upgraded campus safehouse.
+2. Accept mission: retrieve meds from downtown clinic.
+3. Tune vehicle/loadout based on intel (night, rain, medium horde density).
+4. Drive to target, avoid a major intersection horde.
+5. Enter clinic via rooftop, clear interior, gather supplies.
+6. Trigger shrieker event, exfil under pressure.
+7. Return to base, spend IEP on armor upgrade and brake kit.
+8. Prepare for incoming siege warning.
+
+---
+
+## Extra Systems to Make It Stand Out
+- **Reputation System**: factions (students, law enforcement remnants, mechanics, civilians) offer unique perks and missions.
+- **Broadcast Station**: reclaim radio towers to reveal map sectors and trigger world events.
+- **Dynamic Streets**: blocked roads change over time due to wrecks, fires, and horde migration.
+- **Photo Mode & Replay Camera**: highlight cinematic zombie takedowns and car builds.
+- **Seasonal Content**: weather-based events, special infected waves, themed cosmetics.
+
+---
+
+## Development Scope Recommendation (Phased)
+1. **Vertical Slice**: university district + 3 zombie types + core shooting + one customizable car.
+2. **Alpha**: full traversal loop, points economy, basic safehouse upgrades.
+3. **Beta**: city expansion, story missions, faction systems, co-op stress testing.
+4. **Launch**: polished progression, vehicle depth, dynamic world events, endgame modes.

@@ -101,6 +101,7 @@ let threat = 1;
 let threatTimer = 0;
 let shotCooldown = 0;
 let reloadTimer = 0;
+let spawnCooldown = 0;
 let mag = { Pistol: 15, SMG: 0, Rifle: 0 };
 let mission = { type: null, stage: 0, objective: null, reward: 0, progress: 0, total: 0 };
 
@@ -121,16 +122,22 @@ function spawnZombie(near = null) {
     x = clamp(near.x + randRange(-360, 360), 40, world.w - 40);
     y = clamp(near.y + randRange(-360, 360), 40, world.h - 40);
   } else {
-    x = edge % 2 ? randRange(0, world.w) : (edge === 0 ? 30 : world.w - 30);
-    y = edge % 2 ? (edge === 1 ? 30 : world.h - 30) : randRange(0, world.h);
+    // Spawn at an outer edge but keep it reasonably far from the player
+    let tries = 0;
+    do {
+      x = edge % 2 ? randRange(0, world.w) : (edge === 0 ? 30 : world.w - 30);
+      y = edge % 2 ? (edge === 1 ? 30 : world.h - 30) : randRange(0, world.h);
+      tries += 1;
+    } while (dist(x, y, player.x, player.y) < 520 && tries < 6);
   }
+
   const r = Math.random();
   const type = r < 0.62 ? 'Rusher' : (r < 0.88 ? 'Bruiser' : 'Shrieker');
   zombies.push({
     x, y, type,
-    hp: type === 'Bruiser' ? 90 : type === 'Shrieker' ? 50 : 35,
-    r: type === 'Bruiser' ? 20 : 14,
-    speed: type === 'Bruiser' ? 65 : type === 'Shrieker' ? 90 : 110,
+    hp: type === 'Bruiser' ? 80 : type === 'Shrieker' ? 40 : 28,
+    r: type === 'Bruiser' ? 18 : 12,
+    speed: type === 'Bruiser' ? 55 : type === 'Shrieker' ? 80 : 98,
     color: type === 'Bruiser' ? '#9d3f3f' : (type === 'Shrieker' ? '#d7bb3c' : '#7aaf52'),
   });
 }
@@ -386,9 +393,21 @@ function update(dt) {
     }
   }
 
-  const minZ = 10 + threat * 7;
-  while (zombies.length < minZ) spawnZombie();
-  if (Math.random() < 0.02 * threat) spawnZombie(player);
+  spawnCooldown = Math.max(0, spawnCooldown - dt);
+
+  // Keep a manageable number of zombies based on current threat.
+  // Spawn gradually to avoid "popping" enemies appearing right by the player.
+  const minZ = 7 + threat * 3;
+  if (zombies.length < minZ && spawnCooldown === 0) {
+    spawnZombie();
+    spawnCooldown = 0.9;
+  }
+
+  // Occasionally add a new threat from the edges if the world feels empty.
+  if (spawnCooldown === 0 && Math.random() < 0.007 * threat) {
+    spawnZombie();
+    spawnCooldown = 1.2;
+  }
 
   for (let zi = zombies.length - 1; zi >= 0; zi--) {
     const z = zombies[zi];
@@ -601,12 +620,13 @@ function render() {
 
 function renderMinimap() {
   mctx.clearRect(0, 0, minimap.width, minimap.height);
-  mctx.fillStyle = '#151515';
+  mctx.fillStyle = 'rgba(0, 0, 0, 0.14)';
   mctx.fillRect(0, 0, minimap.width, minimap.height);
 
+  // Draw districts with muted transparency so the minimap blends into the UI.
   for (const z of districtZones) {
     mctx.fillStyle = z.color;
-    mctx.globalAlpha = 0.5;
+    mctx.globalAlpha = 0.32;
     mctx.fillRect((z.x / world.w) * minimap.width, (z.y / world.h) * minimap.height, (z.w / world.w) * minimap.width, (z.h / world.h) * minimap.height);
   }
   mctx.globalAlpha = 1;

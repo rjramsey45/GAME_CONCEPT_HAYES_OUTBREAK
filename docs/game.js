@@ -4,9 +4,11 @@ const minimap = document.getElementById('minimap');
 const mctx = minimap.getContext('2d');
 
 const ui = {
-  health: document.getElementById('health'),
+  healthFill: document.getElementById('healthFill'),
+  healthText: document.getElementById('healthText'),
   armor: document.getElementById('armor'),
   points: document.getElementById('points'),
+  pickupHint: document.getElementById('pickupHint'),
   weapon: document.getElementById('weapon'),
   ammo: document.getElementById('ammo'),
   threat: document.getElementById('threat'),
@@ -16,6 +18,19 @@ const ui = {
   shop: document.getElementById('shopPanel'),
   missionPanel: document.getElementById('missionPanel'),
 };
+
+let minimapLarge = false;
+function toggleMinimapSize() {
+  minimapLarge = !minimapLarge;
+  if (minimapLarge) {
+    minimap.classList.add('minimap-large');
+    minimap.classList.remove('minimap-small');
+  } else {
+    minimap.classList.add('minimap-small');
+    minimap.classList.remove('minimap-large');
+  }
+}
+
 
 const world = { w: 4200, h: 2600 };
 const camera = { x: 0, y: 0 };
@@ -46,6 +61,7 @@ const player = {
   inCar: false, weapon: 'Pistol', pistolMul: 1,
   unlocked: new Set(['Pistol']),
   ammo: { Pistol: 45, SMG: 0, Rifle: 0 },
+  hasZaaadrink: false,
 };
 
 const cars = [
@@ -58,6 +74,11 @@ const pickups = [];
 const bullets = [];
 const zombies = [];
 const survivors = [];
+
+const weaponRacks = [
+  { x: 1250, y: 540, gun: 'SMG', cost: 900 },
+  { x: 2420, y: 620, gun: 'Rifle', cost: 1200 },
+];
 
 for (let i = 0; i < 32; i++) {
   pickups.push({
@@ -106,9 +127,9 @@ function spawnZombie(near = null) {
   const type = r < 0.62 ? 'Rusher' : (r < 0.88 ? 'Bruiser' : 'Shrieker');
   zombies.push({
     x, y, type,
-    hp: type === 'Bruiser' ? 160 : type === 'Shrieker' ? 80 : 60,
+    hp: type === 'Bruiser' ? 90 : type === 'Shrieker' ? 50 : 35,
     r: type === 'Bruiser' ? 20 : 14,
-    speed: type === 'Bruiser' ? 70 : type === 'Shrieker' ? 102 : 126,
+    speed: type === 'Bruiser' ? 65 : type === 'Shrieker' ? 90 : 110,
     color: type === 'Bruiser' ? '#9d3f3f' : (type === 'Shrieker' ? '#d7bb3c' : '#7aaf52'),
   });
 }
@@ -157,12 +178,19 @@ function tryReload() {
 }
 
 function buyUpgrade(id) {
-  const costs = { armor: 120, pistol: 140, smg: 220, rifle: 320, medkit: 90, carArmor: 260, carSpeed: 240 };
+  const costs = { armor: 120, zaaadrink: 1500, pistol: 140, smg: 220, rifle: 320, medkit: 90, carArmor: 260, carSpeed: 240 };
   if (player.points < costs[id]) return;
+  if (id === 'zaaadrink' && player.hasZaaadrink) return;
   player.points -= costs[id];
 
   if (id === 'armor') player.armor = clamp(player.armor + 25, 0, 100);
-  if (id === 'medkit') player.health = 100;
+  if (id === 'zaaadrink') player.armor = 100;
+  if (id === 'zaaadrink') {
+    if (!player.hasZaaadrink) {
+      player.hasZaaadrink = true;
+      player.armor = 100;
+    }
+  }
   if (id === 'pistol') player.pistolMul += 0.2;
   if (id === 'smg') { player.unlocked.add('SMG'); player.ammo.SMG += 180; mag.SMG = Math.max(mag.SMG, 36); }
   if (id === 'rifle') { player.unlocked.add('Rifle'); player.ammo.Rifle += 90; mag.Rifle = Math.max(mag.Rifle, 24); }
@@ -173,6 +201,21 @@ function buyUpgrade(id) {
 function interact() {
   const inSafehouse = player.x > safehouse.x && player.x < safehouse.x + safehouse.w && player.y > safehouse.y && player.y < safehouse.y + safehouse.h;
   const atMissionBoard = dist(player.x, player.y, missionBoard.x + 45, missionBoard.y + 35) < 90;
+  const rack = weaponRacks.find(r => dist(player.x, player.y, r.x, r.y) < 70);
+
+  if (rack) {
+    if (player.unlocked.has(rack.gun)) {
+      ui.pickupHint.textContent = `You already have ${rack.gun}.`;
+    } else if (player.points >= rack.cost) {
+      player.points -= rack.cost;
+      player.unlocked.add(rack.gun);
+      player.ammo[rack.gun] += weaponStats[rack.gun].mag * 2;
+      ui.pickupHint.textContent = `Purchased ${rack.gun}!`;
+    } else {
+      ui.pickupHint.textContent = `Need ${rack.cost} pts to buy ${rack.gun}.`;
+    }
+    return;
+  }
 
   if (inSafehouse) ui.shop.classList.toggle('hidden');
   if (atMissionBoard) ui.missionPanel.classList.toggle('hidden');
@@ -184,6 +227,7 @@ window.addEventListener('keydown', e => {
   if (k === 'e') toggleCar();
   if (k === 'f') interact();
   if (k === 'r') tryReload();
+  if (k === 'm') toggleMinimapSize();
 
   if (e.key === '1') player.weapon = 'Pistol';
   if (e.key === '2' && player.unlocked.has('SMG')) player.weapon = 'SMG';
@@ -357,7 +401,7 @@ function update(dt) {
         z.hp -= b.dmg;
         bullets.splice(bi, 1);
         if (z.hp <= 0) {
-          player.points += z.type === 'Bruiser' ? 28 : z.type === 'Shrieker' ? 22 : 12;
+          player.points += 50;
           zombies.splice(zi, 1);
           break;
         }
@@ -376,7 +420,7 @@ function update(dt) {
         nearHits += 1;
       }
     } else if (dist(player.x, player.y, z.x, z.y) < player.r + z.r) {
-      const dmg = z.type === 'Bruiser' ? 20 : 12;
+      const dmg = z.type === 'Bruiser' ? 10 : 6;
       if (player.armor > 0) player.armor = clamp(player.armor - dmg * dt * 4.5, 0, 100);
       else player.health -= dmg * dt;
     }
@@ -413,14 +457,25 @@ function update(dt) {
   camera.x = clamp(player.x - canvas.width / 2, 0, world.w - canvas.width);
   camera.y = clamp(player.y - canvas.height / 2, 0, world.h - canvas.height);
 
-  ui.health.textContent = Math.round(player.health);
-  ui.armor.textContent = Math.round(player.armor);
-  ui.points.textContent = Math.round(player.points);
-  ui.weapon.textContent = player.weapon;
-  ui.ammo.textContent = player.weapon === 'Pistol' ? `${mag.Pistol + player.ammo.Pistol}` : `${mag[player.weapon]}/${player.ammo[player.weapon]}`;
-  ui.threat.textContent = threat;
-  ui.district.textContent = zoneName(player.x, player.y);
-  ui.car.textContent = player.inCar && activeCar ? `${activeCar.name} HP ${Math.round(activeCar.hp)}/${Math.round(activeCar.maxHp)}` : 'On Foot';
+  const healthPct = Math.max(0, Math.min(100, player.health));
+  ui.healthFill.style.width = `${healthPct}%`;
+  ui.healthText.textContent = `${Math.round(healthPct)}%`;
+
+  if (ui.armor) ui.armor.textContent = Math.round(player.armor);
+  if (ui.points) ui.points.textContent = player.points.toLocaleString();
+  if (ui.weapon) ui.weapon.textContent = player.weapon;
+  if (ui.ammo) ui.ammo.textContent = player.weapon === 'Pistol' ? `${mag.Pistol + player.ammo.Pistol}` : `${mag[player.weapon]}/${player.ammo[player.weapon]}`;
+  if (ui.threat) ui.threat.textContent = threat;
+  if (ui.district) ui.district.textContent = zoneName(player.x, player.y);
+  if (ui.car) ui.car.textContent = player.inCar && activeCar ? `${activeCar.name} HP ${Math.round(activeCar.hp)}/${Math.round(activeCar.maxHp)}` : 'On Foot';
+
+  const rackNear = weaponRacks.find(r => dist(player.x, player.y, r.x, r.y) < 70);
+  if (rackNear) {
+    if (player.unlocked.has(rackNear.gun)) ui.pickupHint.textContent = `You already own ${rackNear.gun}.`;
+    else ui.pickupHint.textContent = `Press F to buy ${rackNear.gun} (${rackNear.cost} pts)`;
+  } else {
+    ui.pickupHint.textContent = '';
+  }
 
   if (!mission.type) ui.mission.textContent = 'Go to Mission Board (safehouse)';
   else {
@@ -430,6 +485,7 @@ function update(dt) {
     ui.mission.textContent = label;
   }
 }
+
 
 function drawWorld() {
   for (const z of districtZones) {
@@ -457,6 +513,15 @@ function drawWorld() {
     }
     ctx.stroke();
     ctx.setLineDash([]);
+  }
+
+  for (const rack of weaponRacks) {
+    const p = worldToScreen(rack.x, rack.y);
+    ctx.fillStyle = 'rgba(255, 206, 24, 0.9)';
+    ctx.beginPath(); ctx.arc(p.x, p.y, 10, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = '#111';
+    ctx.font = '10px sans-serif';
+    ctx.fillText(rack.gun, p.x + 14, p.y + 4);
   }
 
   ctx.fillStyle = '#3f5a45';

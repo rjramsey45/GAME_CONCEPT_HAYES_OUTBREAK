@@ -9,22 +9,35 @@
 <body>
   <div id="hud">
     <div><strong>Hayes Outbreak Demo</strong> (GTA-style zombie sandbox)</div>
-    <div>Health: <span id="health">100</span> | Armor: <span id="armor">0</span> | Points: <span id="points">0</span></div>
-    <div>Weapon: <span id="weapon">Pistol</span> | Ammo: <span id="ammo">∞</span> | Threat: <span id="threat">1</span></div>
-    <div>District: <span id="district">University Core</span> | Car: <span id="car">On Foot</span></div>
-    <div class="tip">WASD move • Mouse aim • Click shoot • E enter/exit car • F interact shop • R reload • Shift sprint</div>
+    <div style="margin: 10px 0; font-size: 18px; font-weight: 700; color: gold;">Points: <span id="points">0</span></div>
+
+    <div id="healthBar" class="bar">
+      <div id="healthFill"></div>
+      <span id="healthText">100%</span>
+    </div>
+    <div style="margin-top: 6px; font-size: 12px; opacity: 0.85;">Armor: <span id="armor">0</span> (Zaaadrink: 1500 pts)</div>
+
+    <div id="pickupHint" class="tip"></div>
+    <div class="tip">WASD move • Mouse aim • Click shoot • E interact • R reload • Shift sprint • M toggles minimap size</div>
   </div>
 
   <canvas id="game" width="1280" height="720"></canvas>
+  <canvas id="minimap" class="minimap-small" width="220" height="170"></canvas>
 
   <div id="shopPanel" class="panel hidden">
     <h3>Safehouse Upgrade Terminal</h3>
-    <button data-buy="armor">+25 Armor (120 pts)</button>
+    <button data-buy="medkit">Medkit (90 pts)</button>
+    <button data-buy="zaaadrink">Zaaadrink (1500 pts)</button>
     <button data-buy="pistol">Pistol Damage +20% (140 pts)</button>
-    <button data-buy="smg">Unlock SMG (220 pts)</button>
-    <button data-buy="rifle">Unlock Rifle (320 pts)</button>
     <button data-buy="carArmor">Car Armor +30% (260 pts)</button>
     <button data-buy="carSpeed">Car Top Speed +20% (240 pts)</button>
+  </div>
+
+  <div id="missionPanel" class="panel hidden">
+    <h3>Mission Board</h3>
+    <button data-mission="rescue">Rescue Survivors</button>
+    <button data-mission="heist">Pharmacy Heist</button>
+    <button data-mission="horde">Horde Defense</button>
   </div>
 
   <script src="game.js"></script>
